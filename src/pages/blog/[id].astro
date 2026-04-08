@@ -1,0 +1,71 @@
+---
+import Base from '../../layouts/Base.astro';
+import AdSlot from '../../components/AdSlot.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+---
+
+<Base
+  title={post.data.title}
+  description={post.data.description}
+  type="article"
+  date={post.data.date}
+  author={post.data.author}
+  image={post.data.image}
+>
+  <article>
+    <header class="post-header">
+      <h1>{post.data.title}</h1>
+      <div class="post-meta">
+        <time datetime={post.data.date.toISOString()}>
+          {post.data.date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+        </time>
+        {post.data.author && <span> · {post.data.author}</span>}
+      </div>
+      {post.data.tags && (
+        <div class="post-tags">
+          {post.data.tags.map((tag: string) => <span class="tag">{tag}</span>)}
+        </div>
+      )}
+    </header>
+
+    <AdSlot position="in-content" />
+
+    <div class="post-content">
+      <Content />
+    </div>
+  </article>
+</Base>
+
+<style>
+  .post-header { margin-bottom: 2rem; }
+  h1 { margin-bottom: 0.5rem; }
+  .post-meta { font-size: 0.9rem; color: #666; }
+  .post-tags { display: flex; gap: 0.5rem; margin-top: 0.5rem; }
+  .tag {
+    background: #f0f0f0;
+    padding: 0.15rem 0.5rem;
+    border-radius: 3px;
+    font-size: 0.8rem;
+    color: #555;
+  }
+  .post-content { line-height: 1.8; }
+  .post-content :global(h2) { margin-top: 2rem; margin-bottom: 0.5rem; }
+  .post-content :global(p) { margin-bottom: 1rem; }
+  .post-content :global(ul), .post-content :global(ol) { margin-bottom: 1rem; padding-left: 1.5rem; }
+  .post-content :global(pre) {
+    background: #f6f6f6;
+    padding: 1rem;
+    border-radius: 4px;
+    overflow-x: auto;
+    margin-bottom: 1rem;
+  }
+  .post-content :global(code) { font-size: 0.9em; }
+</style>

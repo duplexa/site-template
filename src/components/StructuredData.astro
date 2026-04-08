@@ -1,0 +1,35 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  date?: Date;
+  author?: string;
+  image?: string;
+  type: 'website' | 'article';
+}
+
+const { title, description, date, author, image, type } = Astro.props;
+const url = new URL(Astro.url.pathname, Astro.site).href;
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'Site Template',
+  url: Astro.site?.href,
+};
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: title,
+  description,
+  url,
+  ...(date && { datePublished: date.toISOString() }),
+  ...(author && { author: { '@type': 'Person', name: author } }),
+  ...(image && { image }),
+};
+
+const schema = type === 'article' ? articleSchema : websiteSchema;
+---
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

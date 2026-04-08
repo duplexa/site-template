@@ -1,0 +1,33 @@
+---
+interface Props {
+  position: 'header' | 'in-content' | 'footer';
+}
+
+const { position } = Astro.props;
+---
+
+<div class={`ad-slot ad-slot--${position}`} data-ad-position={position}>
+  <!-- Replace with your ad network code (e.g. Google AdSense, Mediavine) -->
+  <div class="ad-slot__placeholder">Ad: {position}</div>
+</div>
+
+<style>
+  .ad-slot {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0;
+  }
+  .ad-slot__placeholder {
+    background: #f0f0f0;
+    border: 1px dashed #ccc;
+    padding: 1rem 2rem;
+    color: #999;
+    font-size: 0.85rem;
+    text-align: center;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+</style>

@@ -1,0 +1,80 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import StructuredData from '../components/StructuredData.astro';
+import AdSlot from '../components/AdSlot.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  type?: 'website' | 'article';
+  date?: Date;
+  author?: string;
+}
+
+const { title, description, image, type = 'website', date, author } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead {title} {description} {image} {type} {date} {author} />
+    <StructuredData {title} {description} {type} {date} {author} {image} />
+  </head>
+  <body>
+    <header class="site-header">
+      <nav>
+        <a href="/" class="site-title">Site Template</a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/blog">Blog</a>
+        </div>
+      </nav>
+      <AdSlot position="header" />
+    </header>
+
+    <main>
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <AdSlot position="footer" />
+      <p>&copy; {new Date().getFullYear()} Site Template. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { font-family: system-ui, -apple-system, sans-serif; line-height: 1.6; color: #222; }
+
+  body { max-width: 720px; margin: 0 auto; padding: 0 1rem; }
+
+  a { color: #0066cc; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+
+  img { max-width: 100%; height: auto; }
+
+  .site-header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .site-title { font-weight: 700; font-size: 1.1rem; color: #222; }
+
+  .nav-links { display: flex; gap: 1rem; }
+
+  main { min-height: 60vh; padding: 2rem 0; }
+
+  .site-footer {
+    border-top: 1px solid #eee;
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 0.85rem;
+    color: #666;
+  }
+</style>
