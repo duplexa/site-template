@@ -1,4 +1,5 @@
 User-agent: *
 Allow: /
 
+# IMPORTANT: Update this URL to match the 'site' value in astro.config.mjs
 Sitemap: https://example.com/sitemap-index.xml

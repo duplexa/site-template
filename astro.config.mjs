@@ -4,8 +4,10 @@ import sitemap from '@astrojs/sitemap';
 import cloudflare from '@astrojs/cloudflare';
 
 export default defineConfig({
-  site: 'https://example.com', // Replace with your domain
+  // IMPORTANT: Update this to your domain. Also update public/robots.txt sitemap URL to match.
+  site: 'https://example.com',
   output: 'static',
+  trailingSlash: 'never',
   adapter: cloudflare(),
   integrations: [sitemap()],
   markdown: {

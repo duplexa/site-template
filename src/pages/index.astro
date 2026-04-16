@@ -1,5 +1,6 @@
 ---
 import Base from '../layouts/Base.astro';
+import siteConfig from '../site.config';
 import { getCollection } from 'astro:content';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
@@ -7,9 +8,9 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
   .slice(0, 5);
 ---
 
-<Base title="Home" description="A minimal, SEO-ready static site template built with Astro.">
-  <h1>Welcome</h1>
-  <p>A fast, SEO-ready static site template. Edit content in <code>src/content/blog/</code>.</p>
+<Base title="Home" description={siteConfig.description}>
+  <h1>{siteConfig.name}</h1>
+  <p>{siteConfig.description}</p>
 
   <section>
     <h2>Recent Posts</h2>

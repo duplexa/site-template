@@ -2,6 +2,7 @@
 import BaseHead from '../components/BaseHead.astro';
 import StructuredData from '../components/StructuredData.astro';
 import AdSlot from '../components/AdSlot.astro';
+import siteConfig from '../site.config';
 
 interface Props {
   title: string;
@@ -24,7 +25,7 @@ const { title, description, image, type = 'website', date, author } = Astro.prop
   <body>
     <header class="site-header">
       <nav>
-        <a href="/" class="site-title">Site Template</a>
+        <a href="/" class="site-title">{siteConfig.name}</a>
         <div class="nav-links">
           <a href="/">Home</a>
           <a href="/blog">Blog</a>
@@ -39,7 +40,7 @@ const { title, description, image, type = 'website', date, author } = Astro.prop
 
     <footer class="site-footer">
       <AdSlot position="footer" />
-      <p>&copy; {new Date().getFullYear()} Site Template. All rights reserved.</p>
+      <p>&copy; {new Date().getFullYear()} {siteConfig.footer}. All rights reserved.</p>
     </footer>
   </body>
 </html>
