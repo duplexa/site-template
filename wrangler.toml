@@ -1,0 +1,4 @@
+name = "site-template"
+# Pin this to avoid build failures when the adapter auto-sets a date newer than the runtime supports.
+# Update periodically (e.g. monthly) to pick up new Cloudflare features.
+compatibility_date = "2026-04-01"
